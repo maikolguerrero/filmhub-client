@@ -1,2 +1,27 @@
+// Configuración de los colores
+$primary: #35477D; // Azul oscuro
+$secondary: #6C5B7B; // Púrpura oscuro
+$success: #4CAF50; // Verde
+$info: #03A9F4; // Azul
+$warning: #FFC107; // Amarillo
+$danger: #D62828; // Rosa
+$light: #F5F5F5; // Gris claro
+$dark: #212121; // Gris oscuro
+
+// Importar Calistoga
+@import url('https://fonts.googleapis.com/css2?family=Calistoga&display=swap');
+
+// Importar Caladea
+@import url('https://fonts.googleapis.com/css2?family=Caladea&display=swap');
+
+// Configuración de la tipografía
+.styles {
+  font-family: 'Caladea', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Calistoga', sans-serif;
+}
+
 // Importar los estilos de Bootstrap
 @import 'bootstrap/scss/bootstrap';
