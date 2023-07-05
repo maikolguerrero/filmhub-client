@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NavbarResponsive from "./components/Navbar";
 import Footer from "./components/footer/Footer";
 import NotFound from './components/NotFound';
+import Home from './components/Home';
 import Movie from './components/movies/Movie';
 
 export default function App() {
@@ -10,7 +11,7 @@ export default function App() {
         <NavbarResponsive />
 
         <Routes>
-          <Route path="/" element={<>Inicio</>} />
+          <Route path="/" Component={Home} />
 
           <Route path="movies">
             <Route path="" element={<>movies</>} />
