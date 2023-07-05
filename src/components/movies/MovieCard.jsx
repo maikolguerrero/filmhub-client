@@ -4,6 +4,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { AiFillStar } from 'react-icons/ai';
 import API_ENDPOINT from '../../../config/api_endpoint';
+import { Link } from 'react-router-dom';
 
 export default function MovieCard({ movie }) {
   const { title, image, rating } = movie;
@@ -32,7 +33,9 @@ export default function MovieCard({ movie }) {
       </Card.Body>
       <Card.Footer>
         <div className="d-flex justify-content-center align-items-center">
-          <Button variant="light">Ver más...</Button>
+          <Link to={`/movies/${movie.id}`}>
+            <Button variant="light">Ver más...</Button>
+          </Link>
         </div>
       </Card.Footer>
     </Card>

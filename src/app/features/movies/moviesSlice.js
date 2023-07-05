@@ -34,11 +34,26 @@ export const searchMovies = createAsyncThunk(
   }
 );
 
+// Acción asincrónica para obtener los detalles de una película
+export const fetchMovieDetails = createAsyncThunk(
+  'movies/fetchMovieDetails',
+  async (movieId) => {
+    try {
+      const response = await fetch(`${API_ENDPOINT}/movies/${movieId}`);
+      const data = await response.json();
+      return data.data.movie;
+    } catch (error) {
+      console.error('Error al obtener los detalles de la película:', error);
+      return null; // Retornar null en caso de error
+    }
+  }
+);
 
 const moviesSlice = createSlice({
   name: 'movies',
   initialState: {
     movies: [],
+    movieDetails: null,
     status: 'idle',
     error: null,
   },
@@ -66,8 +81,20 @@ const moviesSlice = createSlice({
       .addCase(searchMovies.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
+      })
+      .addCase(fetchMovieDetails.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchMovieDetails.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.movieDetails = action.payload;
+      })
+      .addCase(fetchMovieDetails.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
       });
   },
 });
 
 export default moviesSlice.reducer;
+
