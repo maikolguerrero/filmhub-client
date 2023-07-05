@@ -20,9 +20,10 @@ export default function App() {
           <Route path="/admin">
             <Route path="" element={<>Reditigir...</>} />
             <Route path="login" element={<>login</>} />
+            <Route path="registro" element={<>registro</>} />
 
             <Route path="panel">
-              <Route path="" element={<>registro</>} />
+              <Route path="" element={<>Panel admin</>} />
 
               <Route path="movies">
                 <Route path="" element={<>Panel ver movies para editar y eliminar</>} />
