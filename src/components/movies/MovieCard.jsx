@@ -24,7 +24,7 @@ export default function MovieCard({ movie }) {
   };
 
   return (
-    <Card className="bg-secondary text-light" style={{ width: '14rem' }}>
+    <Card className="bg-secondary text-light" style={{ width: '16rem' }}>
       <Card.Img variant="top" src={`${API_ENDPOINT}/images/${image}`} alt="imágen_película" />
       <Card.Body>
         <Card.Title>{title}</Card.Title>

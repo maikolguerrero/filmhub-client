@@ -5,6 +5,7 @@ import NotFound from './components/NotFound';
 import Home from './components/Home';
 import Movie from './components/movies/Movie';
 
+
 export default function App() {
   return (
     <BrowserRouter className="styles">
