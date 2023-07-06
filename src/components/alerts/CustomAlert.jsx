@@ -1,40 +1,3 @@
-// import React, { useEffect } from 'react';
-// // import { useDispatch, useSelector } from 'react-redux';
-// import Modal from 'react-bootstrap/Modal';
-// // import { hideAlert } from '../../app/features/alert/alertSlice';
-
-// export default function CustomAlert({messageAlert, }) {
-//   // const dispatch = useDispatch();
-
-//   // const showAlert = useSelector((state) => state.alert.showAlert);
-//   // const messageAlert = useSelector((state) => state.alert.messageAlert);
-
-//   useEffect(() => {
-//     if (showAlert) {
-//       const timeoutId = setTimeout(() => {
-//         handleClose();
-//       }, 5000);
-
-//       return () => clearTimeout(timeoutId);
-//     }
-//   }, [showAlert]);
-
-//   const handleClose = () => {
-//     dispatch(hideAlert());
-//   };
-
-//   return (
-//     <Modal show={showAlert} onHide={handleClose} centered className='d-flex justify-content-center align-items-center m-0 p-0'>
-//       <Modal.Header className="bg-warning text-white">
-//         <Modal.Title>Info</Modal.Title>
-//       </Modal.Header>
-//       <Modal.Body>{messageAlert}</Modal.Body>
-//     </Modal>
-//   );
-// }
-
-
-
 import React, { useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import PropTypes from 'prop-types';
@@ -68,7 +31,7 @@ export default function CustomAlert({ message, show, setShowAlert, duration, red
 
   return (
     <Modal show={show} onHide={handleClose} centered className='d-flex justify-content-center align-items-center m-0 p-0'>
-      <Modal.Header className="bg-warning text-white">
+      <Modal.Header className="bg-info text-white">
         <Modal.Title>Info</Modal.Title>
       </Modal.Header>
       <Modal.Body>{message}</Modal.Body>

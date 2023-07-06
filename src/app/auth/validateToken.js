@@ -14,7 +14,8 @@ const validateToken = async (token) => {
     if (response.status === 200) return true;
     return false;
   } catch (error) {
-    throw new Error('Error al verificar el token de autenticación');
+    console.error('Error al validar el token:', error);
+    return false;
   }
 };
 
