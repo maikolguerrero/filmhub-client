@@ -68,7 +68,7 @@ export default function LoginForm() {
 
   return (
     <Container fluid className="py-5 bg-light d-flex justify-content-center" style={{ width: '100%' }}>
-      <Card className="m-4 p-4 rounded bg-secondary text-light shadow" style={{ width: '25rem' }}>
+      <Card className="m-4 p-4 rounded bg-secondary text-light shadow border-2 border-info" style={{ width: '25rem' }}>
         <h4 className="mb-4">Inicio de sesión</h4>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="username" className="mb-3">
@@ -103,7 +103,7 @@ export default function LoginForm() {
             <Button variant="secondary mx-2" as={Link} to="/admin/registro">
               Crear cuenta
             </Button>
-            <Button variant="success" type="submit" className="mx-2 text-light shadow">
+            <Button variant="info" type="submit" className="mx-2 text-light shadow">
               Ingresar
             </Button>
           </div>

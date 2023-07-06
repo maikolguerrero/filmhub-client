@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import adminLogout from '../../auth/adminLogout';
+import validateToken from '../../auth/validateToken';
 
 const storedToken = localStorage.getItem('token');
-const isLoggedInInitial = await adminLogout(storedToken);
+const validate = await validateToken(storedToken);
 
 const initialState = {
-  isLoggedIn: isLoggedInInitial,
+  isLoggedIn: validate,
   token: storedToken || '',
 };
 

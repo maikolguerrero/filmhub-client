@@ -28,6 +28,11 @@ export default function NavbarResponsive() {
             <Nav className="ms-auto">
               <Nav.Link as={Link} to="/" className='font-weight-bold'>Inicio</Nav.Link>
               <Nav.Link href="#contacto" className='font-weight-bold'>Contacto</Nav.Link>
+              {isLoggedIn && (
+                <>
+                  <Nav.Link as={Link} to="/admin/panel" className='font-weight-bold'>Panel</Nav.Link>
+                </>
+              )}
             </Nav>
 
             <Button variant='primary' className='p-0 m-0 mx-4'>

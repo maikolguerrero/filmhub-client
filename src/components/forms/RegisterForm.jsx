@@ -83,7 +83,7 @@ export default function RegisterForm() {
 
   return (
     <Container fluid className="py-5 bg-light d-flex justify-content-center" style={{ width: '100%' }}>
-      <Card className="m-4 p-4 rounded bg-secondary text-light" style={{ width: '25rem' }}>
+      <Card className="m-4 p-4 rounded bg-secondary text-light border-2 border-info" style={{ width: '25rem' }}>
         <h4 className="mb-4">Registro</h4>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="username" className="mb-3">
@@ -146,7 +146,7 @@ export default function RegisterForm() {
             <Button variant="secondary" className="mx-1" as={Link} to="/admin/login">
               Iniciar Sesión
             </Button>
-            <Button variant="success" className="mx-1 text-light shadow" type="submit">
+            <Button variant="info" className="mx-1 text-light shadow" type="submit">
               Crear cuenta
             </Button>
           </div>

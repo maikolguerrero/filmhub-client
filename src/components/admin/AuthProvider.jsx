@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { setLoggedIn, setToken } from './authSlice';
-import { validateToken } from '../../app/auth/validateToken';
+import validateToken from '../../app/auth/validateToken';
 
 export const AuthProvider = ({ children }) => {
   const dispatch = useDispatch();
