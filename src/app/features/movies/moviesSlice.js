@@ -6,7 +6,7 @@ export const fetchMovies = createAsyncThunk('movies/fetchMovies', async () => {
   try {
     const response = await fetch(`${API_ENDPOINT}/movies`);
     const data = await response.json();
-    return data.data.movies;
+    return data?.data?.movies ?? [];
   } catch (error) {
     console.error('Error al obtener las películas:', error);
     return []; // Retornar un arreglo vacío en caso de error
@@ -26,7 +26,7 @@ export const searchMovies = createAsyncThunk(
         body: JSON.stringify({ search: searchTerm })
       });
       const data = await response.json();
-      return data.data.movies;
+      return data?.data?.movies ?? [];
     } catch (error) {
       console.error('Error al buscar las películas:', error);
       return []; // Retornar un arreglo vacío en caso de error
@@ -41,7 +41,8 @@ export const fetchMovieDetails = createAsyncThunk(
     try {
       const response = await fetch(`${API_ENDPOINT}/movies/${movieId}`);
       const data = await response.json();
-      return data.data.movie;
+      // return data.data.movie;
+      return data?.data?.movie ?? 'errorMovie';
     } catch (error) {
       console.error('Error al obtener los detalles de la película:', error);
       return null; // Retornar null en caso de error
