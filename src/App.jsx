@@ -10,6 +10,7 @@ import RegisterForm from './components/forms/RegisterForm';
 import { store } from './app/store';
 import ProtectedRoute from './app/auth/ProtectedRoute';
 import Panel from './components/admin/Panel';
+import AdminsTable from './components/admin/AdminsTable';
 
 export default function App() {
   return (
@@ -39,7 +40,7 @@ export default function App() {
               </Route>
 
               <Route path="reviews" element={<>Panel usuarios reviews</>} />
-              <Route path="users" element={<>Panel usuarios admin</>} />
+              <Route path="users" element={<ProtectedRoute panelRoute={AdminsTable} />} />
             </Route>
           </Route>
 
