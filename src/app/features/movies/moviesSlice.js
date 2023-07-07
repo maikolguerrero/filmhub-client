@@ -5,6 +5,8 @@ import API_ENDPOINT from '../../../../config/api_endpoint';
 export const fetchMovies = createAsyncThunk('movies/fetchMovies', async () => {
   try {
     const response = await fetch(`${API_ENDPOINT}/movies`);
+    if (!response.ok) return [];
+
     const data = await response.json();
     return data?.data?.movies ?? [];
   } catch (error) {
@@ -25,6 +27,8 @@ export const searchMovies = createAsyncThunk(
         },
         body: JSON.stringify({ search: searchTerm })
       });
+      if (!response.ok) return [];
+
       const data = await response.json();
       return data?.data?.movies ?? [];
     } catch (error) {
@@ -40,8 +44,9 @@ export const fetchMovieDetails = createAsyncThunk(
   async (movieId) => {
     try {
       const response = await fetch(`${API_ENDPOINT}/movies/${movieId}`);
+      if (!response.ok) return [];
+
       const data = await response.json();
-      // return data.data.movie;
       return data?.data?.movie ?? 'errorMovie';
     } catch (error) {
       console.error('Error al obtener los detalles de la película:', error);
@@ -98,4 +103,3 @@ const moviesSlice = createSlice({
 });
 
 export default moviesSlice.reducer;
-
