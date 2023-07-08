@@ -11,6 +11,7 @@ import { store } from './app/store';
 import ProtectedRoute from './app/auth/ProtectedRoute';
 import Panel from './components/admin/Panel';
 import AdminsTable from './components/admin/AdminsTable';
+import PanelMovies from './components/admin/PanelMovies';
 
 export default function App() {
   return (
@@ -34,10 +35,10 @@ export default function App() {
             <Route path="panel">
               <Route path="" element={<ProtectedRoute route={Panel} />} />
 
-              <Route path="movies">
-                <Route path="" element={<>Panel ver movies para editar y eliminar</>} />
-                <Route path="add" element={<>Panel agregar movies</>} />
-              </Route>
+              
+              <Route path="movies" element={<ProtectedRoute panelRoute={PanelMovies} />} />
+              <Route path="add" element={<>Panel agregar movies</>} />
+              
 
               <Route path="reviews" element={<>Panel usuarios reviews</>} />
               <Route path="users" element={<ProtectedRoute panelRoute={AdminsTable} />} />

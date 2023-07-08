@@ -10,6 +10,7 @@ import Button from 'react-bootstrap/Button';
 import ConfirmationModal from '../alerts/ConfirmationModal';
 import AdminEditPermissionsForm from '../forms/AdminEditPermissionsForm';
 import CustomAlert from '../alerts/CustomAlert';
+import { Paginacion } from '../admin/tables/Paginacion';
 
 export default function AdminsTable() {
   const admins = useSelector(selectAdmins)
@@ -20,6 +21,8 @@ export default function AdminsTable() {
   const [adminDeleted, setAdminDeleted] = useState(false);
   const [message, setMessage] = useState('');
   const [showAlert, setShowAlert] = useState(false);
+  const [pagina, setPagina] = useState(1);
+  const [porPagina, setPorPagina] = useState(10);
 
   useEffect(() => {
     dispatch(fetchAdmins());
@@ -30,6 +33,8 @@ export default function AdminsTable() {
     setAdminToDelete(adminId);
     setShowConfirmationModal(true);
   };
+
+  const maximo = Math.ceil(admins.length / porPagina);
 
   const handleClose = () => {
     setShowConfirmationModal(false);
@@ -81,7 +86,10 @@ export default function AdminsTable() {
                   </tr>
                 </thead>
                 <tbody>
-                  {admins.map((admin) => (
+                  {admins.slice(
+                    (pagina - 1) * porPagina,
+                    (pagina - 1) * porPagina + porPagina
+                  ).map((admin) => (
                     <tr key={admin.id}>
                       <td>{admin.id}</td>
                       <td>{admin.username}</td>
@@ -106,6 +114,8 @@ export default function AdminsTable() {
           </Row>
         </>
       }
+
+      <Paginacion pagina={pagina} setPagina={setPagina} maximo={maximo} />
 
       <ConfirmationModal
         show={showConfirmationModal}

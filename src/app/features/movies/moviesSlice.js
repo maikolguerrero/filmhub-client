@@ -55,6 +55,31 @@ export const fetchMovieDetails = createAsyncThunk(
   }
 );
 
+// Eliminar Movies
+export const deleteMovie = createAsyncThunk (
+  'movies/deleteMovie',
+  async (info) => {
+    try {
+      const response = await fetch(`${API_ENDPOINT}/movies/${info.id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${info.token}`
+        }
+      });
+      const data = await response.json();
+      if (data.status === 200) {
+
+        return info.id
+      }; // Se eliminó exitosamente la pelicula
+
+      return false; // Hubo un problema al eliminar la Pelicula
+    } catch (error) {
+      console.error('Error al Eliminar la Película:', error);
+      return false; // Ocurrió un error al eliminar la pelicula
+    }
+  }
+)
+
 const moviesSlice = createSlice({
   name: 'movies',
   initialState: {
@@ -96,6 +121,24 @@ const moviesSlice = createSlice({
         state.movieDetails = action.payload;
       })
       .addCase(fetchMovieDetails.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(deleteMovie.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(deleteMovie.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        
+        for (let i = 0; i < state.movies.length; i++) {
+          
+          if (state.movies[i].id === action.payload) {
+            state.movies.splice(i, 1)
+          }
+          
+        }
+      })
+      .addCase(deleteMovie.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });
