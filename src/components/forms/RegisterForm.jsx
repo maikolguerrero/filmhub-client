@@ -6,6 +6,7 @@ import { selectDarkMode } from '../../app/features/darkMode/darkMode'
 import { IoLockClosed, IoPersonCircle, IoKeySharp } from "react-icons/io5";
 import API_ENDPOINT from '../../../config/api_endpoint';
 import CustomAlert from '../alerts/CustomAlert';
+import { AnimatePresence, motion } from "framer-motion"
 
 export default function RegisterForm() {
   const darkMode = useSelector(selectDarkMode);
@@ -95,7 +96,24 @@ export default function RegisterForm() {
 
   return (
     <main className={`${darkMode ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
-      <section className="seccion-registro py-5">
+      <motion.section
+        className="seccion-registro py-5"
+        initial={{
+          opacity: 0,
+          scale: 0
+        }}
+        animate={{
+          opacity: 1,
+          scale: 1
+        }}
+        transition={{
+          duration: 1,
+          ease: 'backOut'
+        }}
+        exit={{
+          opacity: 0
+        }}
+      >
         <div className={`caja-formulario lg:caja-formulario-grande border border-3 border-info ${darkMode ? 'bg-dark' : 'bg-light'}`}>
           <form className="formulario lg:p-4" onSubmit={handleSubmit}>
             <h2 className="titulo-form fs-1">Registrate</h2>
@@ -165,7 +183,7 @@ export default function RegisterForm() {
 
           </form>
         </div>
-      </section>
+      </motion.section>
       {
         showAlert && (
           <CustomAlert message={message} setShowAlert={setShowAlert} show={showAlert} duration={5000} redirectPath={redirectPath} />

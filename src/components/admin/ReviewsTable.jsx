@@ -11,6 +11,8 @@ import ConfirmationModal from '../alerts/ConfirmationModal';
 import CustomAlert from '../alerts/CustomAlert';
 import { AiFillStar } from 'react-icons/ai';
 import { Paginacion } from '../admin/tables/Paginacion';
+import { variants } from '../../styles/animations/variants';
+import { AnimatePresence, motion } from "framer-motion"
 
 export default function ReviewsTable() {
   const reviews = useSelector(selectReviews);
@@ -103,7 +105,26 @@ export default function ReviewsTable() {
 
   return (
     <Container fluid className={`py-5 text-center ${darkMode ? 'bg-dark' : 'bg-light'}`} style={{ width: '100%' }}>
-      <h1 className={`py-3 text-center ${darkMode ? 'text-light' : 'text-dark'}`}>Administrar Reseñas</h1>
+      <motion.h1
+        initial={{
+          opacity: 0,
+          scale: 0
+        }}
+        animate={{
+          opacity: 1,
+          scale: 1
+        }}
+        transition={{
+          duration: 1,
+          ease: 'backOut'
+        }}
+        exit={{
+          opacity: 0
+        }}
+        className={`py-3 text-center ${darkMode ? 'text-light' : 'text-dark'}`}
+      >
+        Administrar Reseñas
+      </motion.h1>
       {reviews.length === 0 ? (
         <h2 className={`text-danger`}>No hay reseñas disponibles</h2>
       ) : (
@@ -119,8 +140,16 @@ export default function ReviewsTable() {
               </tr>
             </thead>
             <tbody className='align-middle'>
-              {reviews.slice((pagina - 1) * porPagina, (pagina - 1) * porPagina + porPagina).map((review) => (
-                <tr key={review.id}>
+              {reviews.slice((pagina - 1) * porPagina, (pagina - 1) * porPagina + porPagina).map((review, index) => (
+                <motion.tr
+                  key={review.id}
+                  custom={{ delay: (index + 1) * 0.2 }}
+                  initial='hidden'
+                  animate='visible'
+                  exit='hidden'
+                  variants={variants}
+                  layoutId={review.id}
+                >
                   <td>{review.id}</td>
                   <td>{review.name}</td>
                   <td>
@@ -132,12 +161,31 @@ export default function ReviewsTable() {
                       Eliminar
                     </Button>
                   </td>
-                </tr>
+                </motion.tr>
               ))}
             </tbody>
           </Table>
 
-          <Paginacion pagina={pagina} setPagina={setPagina} maximo={maximo} />
+          <motion.div
+            initial={{
+              x: 200,
+              opacity: 0
+            }}
+            animate={{
+              x: 0,
+              opacity: 1
+            }}
+            transition={{
+              duration: 1,
+              ease: 'easeOut',
+            }}
+            exit={{
+              opacity: 0
+            }}
+          >
+            <Paginacion pagina={pagina} setPagina={setPagina} maximo={maximo} />
+          </motion.div>
+
         </>
       )}
 

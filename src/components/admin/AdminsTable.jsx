@@ -12,6 +12,8 @@ import ConfirmationModal from '../alerts/ConfirmationModal';
 import AdminEditPermissionsForm from '../forms/AdminEditPermissionsForm';
 import CustomAlert from '../alerts/CustomAlert';
 import { Paginacion } from '../admin/tables/Paginacion';
+import { variants } from '../../styles/animations/variants';
+import { AnimatePresence, motion } from "framer-motion"
 
 export default function AdminsTable() {
   const admins = useSelector(selectAdmins)
@@ -76,7 +78,26 @@ export default function AdminsTable() {
           <h2 className={`${darkMode ? 'text-light' : 'text-dark'}`}>No puedes ver los datos de los admins</h2>
         </div> :
         <>
-          <h1 className={`py-3 text-center  ${darkMode ? 'text-light' : 'text-dark'}`}>Administrar Usuarios Admins</h1>
+          <motion.h1
+            className={`py-3 text-center  ${darkMode ? 'text-light' : 'text-dark'}`}
+            initial={{
+              opacity: 0,
+              scale: 0
+            }}
+            animate={{
+              opacity: 1,
+              scale: 1
+            }}
+            transition={{
+              duration: 1,
+              ease: 'backOut'
+            }}
+            exit={{
+              opacity: 0
+            }}
+          >
+            Administrar Usuarios Admins
+          </motion.h1>
           <Row className="justify-content-center pt-3">
             <Col xs={11} sm={9} md={7} lg={6}>
               <Table striped bordered hover responsive="md" variant={`${darkMode ? 'dark' : 'info'}`} className={`text-center text-light align-middle shadow border-1 border-info ${darkMode ? 'dark' : 'primary'}`}>
@@ -88,38 +109,65 @@ export default function AdminsTable() {
                     <th>Acciones</th>
                   </tr>
                 </thead>
-                <tbody className='align-middle'>
-                  {admins.slice(
-                    (pagina - 1) * porPagina,
-                    (pagina - 1) * porPagina + porPagina
-                  ).map((admin) => (
-                    <tr key={admin.id}>
-                      <td>{admin.id}</td>
-                      <td>{admin.username}</td>
-                      <td>{admin.role}</td>
-                      <td>
-                        <Row xs={1} sm={2} md={2} lg={2} xl={2} className="mx-0">
-                          <Col className="my-1">
-                            <AdminEditPermissionsForm adminId={admin.id} permissions={admin.permissions} />
-                          </Col>
-                          <Col className="my-1">
-                            <Button variant="danger" className='' onClick={() => handleDeleteAdmin(admin.id)}>
-                              Eliminar
-                            </Button>
-                          </Col>
-                        </Row>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
+                
+                  <tbody className='align-middle'>
+                    {admins.slice(
+                      (pagina - 1) * porPagina,
+                      (pagina - 1) * porPagina + porPagina
+                    ).map((admin, index) => (
+                      <motion.tr
+                        key={admin.id}
+                        custom={{ delay: (index + 1) * 0.2 }}
+                        initial='hidden'
+                        animate='visible'
+                        exit='hidden'
+                        variants={variants}
+                        layoutId={admin.id}
+                      >
+                        <td>{admin.id}</td>
+                        <td>{admin.username}</td>
+                        <td>{admin.role}</td>
+                        <td>
+                          <Row xs={1} sm={2} md={2} lg={2} xl={2} className="mx-0">
+                            <Col className="my-1">
+                              <AdminEditPermissionsForm adminId={admin.id} permissions={admin.permissions} />
+                            </Col>
+                            <Col className="my-1">
+                              <Button variant="danger" className='' onClick={() => handleDeleteAdmin(admin.id)}>
+                                Eliminar
+                              </Button>
+                            </Col>
+                          </Row>
+                        </td>
+                      </motion.tr>
+                    ))}
+                  </tbody>
+                
               </Table>
             </Col>
           </Row>
         </>
       }
 
-      {admins.length !== 0 && <Paginacion pagina={pagina} setPagina={setPagina} maximo={maximo} />}
-
+      <motion.div
+        initial={{
+          x: 200,
+          opacity: 0
+        }}
+        animate={{
+          x: 0,
+          opacity: 1
+        }}
+        transition={{
+          duration: 1,
+          ease: 'easeOut',
+        }}
+        exit={{
+          opacity: 0
+        }}
+      >
+        {admins.length !== 0 && <Paginacion pagina={pagina} setPagina={setPagina} maximo={maximo} />}
+      </motion.div>
 
       <ConfirmationModal
         show={showConfirmationModal}
