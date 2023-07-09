@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import Container from 'react-bootstrap/Container';
+import { IoLockClosed, IoPersonCircle, IoKeySharp } from "react-icons/io5";
 import API_ENDPOINT from '../../../config/api_endpoint';
 import CustomAlert from '../alerts/CustomAlert';
 
@@ -27,9 +25,7 @@ export default function RegisterForm() {
   const validatePassword = (text) => text.trim() !== '' && text.trim().length >= 8;
   const validatePasswords = (password, confirmPassword) => password === confirmPassword;
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleChange = () => {
     const verifyUsername = validateUsername(username);
     const verifyPassword = validatePassword(password);
     const verifyConfirmPassword = validatePassword(confirmPassword);
@@ -45,10 +41,46 @@ export default function RegisterForm() {
       setConfirmPasswordError(!verifyPasswords ? 'Las contraseñas no coinciden.' : '');
     }
 
-    setRegistrationCodeError(!verifyRegistrationCode ? 'Ingresa un valor.' : '');
+    setRegistrationCodeError(!verifyRegistrationCode ? 'Ingresa un valor en el Código.' : '');
+  }
 
-    if (!verifyUsername || !verifyPassword || !verifyConfirmPassword || !verifyPasswords || !verifyRegistrationCode) {
-      return;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const verifyUsername = validateUsername(username);
+    const verifyPassword = validatePassword(password);
+    const verifyConfirmPassword = validatePassword(confirmPassword);
+    const verifyPasswords = validatePasswords(password, confirmPassword);
+    const verifyRegistrationCode = validateText(registrationCode);
+
+    if (!verifyUsername) {
+      setShowAlert(true)
+      setMessage(usernameError)
+      return
+    }
+
+    if (!verifyPassword) {
+      setShowAlert(true)
+      setMessage(passwordError)
+      return
+    }
+
+    if (!verifyRegistrationCode) {
+      setShowAlert(true)
+      setMessage(registrationCodeError)
+      return
+    }
+
+    if (!verifyPasswords) {
+      setShowAlert(true)
+      setMessage(passwordError)
+      return
+    }
+
+    if (!verifyConfirmPassword) {
+      setShowAlert(true)
+      setMessage(confirmPasswordError)
+      return
     }
 
     const data = {
@@ -82,81 +114,90 @@ export default function RegisterForm() {
   };
 
   return (
-    <Container fluid className="py-5 bg-light d-flex justify-content-center" style={{ width: '100%' }}>
-      <Card className="m-4 p-4 rounded bg-secondary text-light border-2 border-info" style={{ width: '25rem' }}>
-        <h4 className="mb-4">Registro</h4>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="username" className="mb-3">
-            <Form.Label>Nombre de usuario</Form.Label>
-            <Form.Control
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              isInvalid={usernameError !== ''}
-              className='shadow'
-            />
-            <Form.Control.Feedback type="invalid" className="error-message">
-              {usernameError}
-            </Form.Control.Feedback>
-          </Form.Group>
+    <main>
 
-          <Form.Group controlId="password" className="mb-3">
-            <Form.Label>Contraseña</Form.Label>
-            <Form.Control
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              isInvalid={passwordError !== ''}
-              className='shadow'
-            />
-            <Form.Control.Feedback type="invalid" className="error-message">
-              {passwordError}
-            </Form.Control.Feedback>
-          </Form.Group>
+      <section className="seccion-registro my-5">
+        <div className="caja-formulario lg:caja-formulario-grande border border-3 border-dark bg-light">
+          <form action="" className="formulario lg:p-4"
+            onSubmit={handleSubmit}
+          >
+            <h2 className="titulo-form text-dark fs-1">Registrate</h2>
+            <div className="caja-input border-bottom border-3 border-dark">
+              <IoPersonCircle className="icono text-dark" />
+              <input
+                type="text"
+                className='text-primary fs-5 '
+                required
+                value={username}
+                onChange={(e) => {
+                  setUsername(e.target.value)
+                  handleChange()
+                }}
+              />
+              <label htmlFor="">Usuario</label>
+            </div>
 
-          <Form.Group controlId="confirmPassword" className="mb-3">
-            <Form.Label>Confirmar Contraseña</Form.Label>
-            <Form.Control
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              isInvalid={confirmPasswordError !== ''}
-              className='shadow'
-            />
-            <Form.Control.Feedback type="invalid" className="error-message">
-              {confirmPasswordError}
-            </Form.Control.Feedback>
-          </Form.Group>
+            <div className="caja-input border-bottom border-3 border-dark">
+              <IoLockClosed className="icono text-dark" />
+              <input
+                type="password"
+                className='text-primary fs-5 '
+                required
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value)
+                  handleChange()
+                }}
+              />
+              <label htmlFor="">Contraseña</label>
+            </div>
+            <div className="caja-input border-bottom border-3 border-dark">
+              <IoLockClosed className="icono text-dark" />
+              <input
+                type="password"
+                className='text-primary fs-5 '
+                required
+                value={confirmPassword}
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value)
+                  handleChange()
+                }}
+              />
+              <label htmlFor="">Confirmar Contraseña</label>
+            </div>
+            <div className="caja-input border-bottom border-3 border-dark">
+              <IoKeySharp className="icono text-dark" />
+              <input
+                type="text"
+                className='text-primary fs-5 '
+                required
+                value={registrationCode}
+                onChange={(e) => {
+                  setRegistrationCode(e.target.value)
+                  handleChange()
+                }}
+              />
+              <label htmlFor="">Código de Registro</label>
+            </div>
 
-          <Form.Group controlId="registrationCode" className="mb-3">
-            <Form.Label>Código de Registro</Form.Label>
-            <Form.Control
-              type="password"
-              value={registrationCode}
-              onChange={(e) => setRegistrationCode(e.target.value)}
-              isInvalid={registrationCodeError !== ''}
-              className='shadow'
-            />
-            <Form.Control.Feedback type="invalid" className="error-message">
-              {registrationCodeError}
-            </Form.Control.Feedback>
-          </Form.Group>
 
-          <div className='d-flex justify-content-center'>
-            <Button variant="secondary" className="mx-1" as={Link} to="/admin/login">
-              Iniciar Sesión
-            </Button>
-            <Button variant="info" className="mx-1 text-light shadow" type="submit">
-              Crear cuenta
-            </Button>
-          </div>
-        </Form>
+            <div className='d-flex gap-2'>
+              <Button className="boton-enviar" variant="secondary" as={Link} to="/admin/login">
+                Iniciar Sesión
+              </Button>
+              <Button className="boton-enviar" variant="primary" type="submit">
+                Crear cuenta
+              </Button>
+            </div>
 
-        {showAlert && (
+          </form>
+        </div>
+      </section>
+      {
+        showAlert && (
           <CustomAlert message={message} setShowAlert={setShowAlert} show={showAlert} duration={5000} redirectPath={redirectPath} />
-        )}
-
-      </Card>
-    </Container>
+        )
+      }
+    </main>
   );
 }

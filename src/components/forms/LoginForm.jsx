@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import Container from 'react-bootstrap/Container';
+import { IoLockClosed, IoPersonCircle } from "react-icons/io5";
 import API_ENDPOINT from '../../../config/api_endpoint';
 import { login } from '../../app/features/auth/authSlice';
 import CustomAlert from '../alerts/CustomAlert';
@@ -20,6 +18,15 @@ export default function LoginForm() {
 
   const validateText = (text) => text.trim() !== '';
 
+  const handleChange = () => {
+    const verifyUsername = validateText(username);
+    const verifyPassword = validateText(password);
+
+    setUsernameError(!verifyUsername ? 'Por favor, ingresa un nombre de usuario.' : '');
+    setPasswordError(!verifyPassword ? 'Por favor, ingresa una contraseña.' : '');
+
+    if (!verifyUsername || !verifyPassword) return;
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,14 +35,6 @@ export default function LoginForm() {
       username,
       password
     };
-
-    const verifyUsername = validateText(username);
-    const verifyPassword = validateText(password);
-
-    setUsernameError(!verifyUsername ? 'Por favor, ingresa un nombre de usuario.' : '');
-    setPasswordError(!verifyPassword ? 'Por favor, ingresa una contraseña.' : '');
-
-    if (!verifyUsername || !verifyPassword) return;
 
     try {
       const response = await fetch(`${API_ENDPOINT}/admin/login`, {
@@ -67,53 +66,56 @@ export default function LoginForm() {
   };
 
   return (
-    <Container fluid className="py-5 bg-light d-flex justify-content-center" style={{ width: '100%' }}>
-      <Card className="m-4 p-4 rounded bg-secondary text-light shadow border-2 border-info" style={{ width: '25rem' }}>
-        <h4 className="mb-4">Inicio de sesión</h4>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="username" className="mb-3">
-            <Form.Label>Nombre de usuario</Form.Label>
-            <Form.Control
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              isInvalid={usernameError !== ''}
-              className='shadow'
-            />
-            <Form.Control.Feedback type="invalid" className="error-message">
-              {usernameError}
-            </Form.Control.Feedback>
-          </Form.Group>
+    <main>
 
-          <Form.Group controlId="password" className="mb-3">
-            <Form.Label>Contraseña</Form.Label>
-            <Form.Control
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              isInvalid={passwordError !== ''}
-              className='shadow'
-            />
-            <Form.Control.Feedback type="invalid" className="error-message">
-              {passwordError}
-            </Form.Control.Feedback>
-          </Form.Group>
+      <section className="seccion-registro my-5">
+        <div className="caja-formulario lg:caja-formulario-grande border border-3 border-dark bg-light">
+          <form action="" className="formulario lg:p-4" onSubmit={handleSubmit}>
+            <h2 className="titulo-form text-dark fs-1">Iniciar Sesión</h2>
+            <div className="caja-input border-bottom border-3 border-dark">
+              <IoPersonCircle className="icono text-dark" />
+              <input type="text"
+                Vali='hola'
+                className='text-primary fs-5 '
+                required
+                value={username}
+                onChange={(e) => {
+                  setUsername(e.target.value)
+                  handleChange()
+                }}
+              />
+              <label htmlFor="" className='text-dark'>Usuario</label>
+            </div>
 
-          <div className='d-flex justify-content-center'>
-            <Button variant="secondary mx-2" as={Link} to="/admin/registro">
-              Crear cuenta
-            </Button>
-            <Button variant="info" type="submit" className="mx-2 text-light shadow">
-              Ingresar
-            </Button>
-          </div>
+            <div className="caja-input border-bottom border-3 border-dark">
+              <IoLockClosed className="icono text-dark" />
+              <input
+                type="password"
+                className='text-primary fs-5'
+                required
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value)
+                  handleChange()
+                }}/>
+              <label htmlFor="" className='text-dark'>Contraseña</label>
+            </div>
 
-        </Form>
 
-        {showAlert && (
+            <div className='d-flex gap-2'>
+              <Button className="boton-enviar" type="submit" variant="secondary" as={Link} to="/admin/registro">Crear Cuenta</Button>
+              <Button className="boton-enviar" type="submit" variant="primary" 
+             >Iniciar Sesión</Button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      {
+        showAlert && (
           <CustomAlert message={message} setShowAlert={setShowAlert} show={showAlert} duration={5000} />
-        )}
-      </Card>
-    </Container>
+        )
+      }
+    </main>
   );
 }

@@ -8,6 +8,139 @@ $danger: #D62828; // Rosa
 $light: #F5F5F5; // Gris claro
 $dark: #212121; // Gris oscuro
 
+.seccion-registro {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  width: 100%;
+  background-position: center;
+  background-size: cover;
+}
+
+.caja-formulario{
+  position: relative;
+  min-width: 50%;
+  width: auto;
+  height: auto;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3rem;
+}
+
+.caja-formulario-grande {
+  width: 50% !important;
+}
+
+.titulo-form {
+  font-size: 3rem;
+  text-align: center
+}
+
+.caja-input {
+  position: relative;
+  margin: 3rem 0;
+  width: 100%;
+}
+
+.caja-input label {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  font-weight: bold;
+  pointer-events: none;
+  transition: .5s;
+}
+
+input:focus ~ label,
+input:valid ~ label{
+  top: -5px;
+}
+
+.caja-input input {
+  width: 100%;
+  height: 3rem;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  padding: 0 2rem 0 0.5rem;
+}
+
+.icono {
+  position: absolute;
+  right: 0px;
+  color: #fff;
+  font-size: 2rem;
+  top: 0.5rem
+}
+
+.redirecciones {
+  margin: 0.75rem 0 ;
+  display: flex;
+  gap: 0.5rem
+}
+
+.redirecciones label {
+  color: #fff;
+  font-size: 1rem
+}
+
+.boton-enviar {
+  width: 100%;
+  margin: 1rem 0px;
+  border-radius: 2rem !important
+}
+
+.formulario{
+  width: 100%;
+  padding: 2rem;
+}
+
+.contenedor {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+
+  p {
+    margin: 0;
+  }
+
+  button {
+      border: none;
+      padding: 5px 10px;
+      border-radius: 3px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      svg {
+          width: 10px;
+      }
+  }
+
+  button[disabled] {
+      background-color: #474747;
+      cursor: no-drop;
+  }
+
+  input {
+      height: 30px;
+      width: 50px;
+      text-align: center;
+      border-radius: 3px;
+  }
+}
+
 // Importar Calistoga
 @import url('https://fonts.googleapis.com/css2?family=Calistoga&display=swap');
 
@@ -22,6 +155,23 @@ $dark: #212121; // Gris oscuro
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Calistoga', sans-serif;
 }
+
+$utilities: (
+  "height": (
+    property: height,
+    class: h,
+    values: (
+      25: 25%,
+      50: 50%,
+      75: 75%,
+      100: 100%,
+      auto: auto,
+      4: 4rem
+    )
+  )
+);
+
+
 
 // Importar los estilos de Bootstrap
 @import 'bootstrap/scss/bootstrap';
