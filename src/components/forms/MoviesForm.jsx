@@ -8,7 +8,7 @@ import API_ENDPOINT from "../../../config/api_endpoint";
 import { fetchMovies } from "../../app/features/movies/moviesSlice";
 import CustomAlert from "../alerts/CustomAlert";
 
-function MoviesForm(props) {
+export default function MoviesForm(props) {
   const authState = useSelector((state) => state.auth);
   const generosState = useSelector((state) => state.generos);
   const dispatch = useDispatch();
@@ -31,8 +31,6 @@ function MoviesForm(props) {
     dispatch(listarGeneros());
 
     if (props.envio) {
-      console.log(props.movie)
-
       let release_date = props.movie.release_date.split(/T/, 1)
       let genre = 0
       generosState.generos.forEach(genero => {
@@ -43,7 +41,6 @@ function MoviesForm(props) {
 
       setState({
         ...state,
-
         title: props.movie.title,
         genre: genre.toString(),
         synopsis: props.movie.synopsis,
@@ -80,7 +77,6 @@ function MoviesForm(props) {
       ...state,
       [e.target.name]: e.target.value,
     });
-    console.log(e.target.files[0])
   }
 
   const handleSubmit = (e) => {
@@ -158,6 +154,7 @@ function MoviesForm(props) {
             placeholder="Ingresa el Título"
             onChange={handleChange}
             value={state.title}
+            className={`${darkMode ? 'bg-dark text-light custom-placeholder' : 'text-dark'}`}
           />
         </Form.Group>
 
@@ -168,6 +165,7 @@ function MoviesForm(props) {
             type="date"
             onChange={handleChange}
             value={state.release_date}
+            className={`${darkMode ? 'bg-dark text-light custom-placeholder' : 'text-dark'}`}
           />
         </Form.Group>
 
@@ -180,6 +178,7 @@ function MoviesForm(props) {
             placeholder="Ingresa la sinopsis de la películas..."
             onChange={handleChange}
             value={state.synopsis}
+            className={`${darkMode ? 'bg-dark text-light custom-placeholder' : 'text-dark'}`}
           />
         </Form.Group>
 
@@ -191,6 +190,7 @@ function MoviesForm(props) {
             placeholder="Ingresa los actores"
             onChange={handleChange}
             value={state.actors}
+            className={`${darkMode ? 'bg-dark text-light custom-placeholder' : 'text-dark'}`}
           />
         </Form.Group>
 
@@ -201,7 +201,7 @@ function MoviesForm(props) {
             aria-label="Default select example"
             onChange={handleChange}
             value={state.genre}
-
+            className={`${darkMode ? 'bg-dark text-light custom-placeholder' : 'text-dark'}`}
           >
             <option value=""> </option>
             {generosState.generos.map((genero) => (
@@ -221,6 +221,7 @@ function MoviesForm(props) {
             placeholder="Ingresa los directores"
             onChange={handleChange}
             value={state.directors}
+            className={`${darkMode ? 'bg-dark text-light custom-placeholder' : 'text-dark'}`}
           />
         </Form.Group>
 
@@ -232,12 +233,18 @@ function MoviesForm(props) {
             placeholder="Ingresa la franquicia"
             onChange={handleChange}
             value={state.franchise}
+            className={`${darkMode ? 'bg-dark text-light custom-placeholder' : 'text-dark'}`}
           />
         </Form.Group>
 
         <Form.Group controlId="imagen-m" className="mb-3">
           <Form.Label>Ingresa el poster: </Form.Label>
-          <Form.Control name="image" type="file" onChange={handleChangeImage} />
+          <Form.Control
+            name="image"
+            type="file"
+            onChange={handleChangeImage}
+            className={`${darkMode ? 'bg-dark text-light custom-placeholder' : 'text-dark'}`}
+          />
         </Form.Group>
 
         <Button
@@ -258,5 +265,3 @@ function MoviesForm(props) {
     </div>
   );
 }
-
-export default MoviesForm;
