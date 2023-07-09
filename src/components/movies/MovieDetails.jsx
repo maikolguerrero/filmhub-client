@@ -77,14 +77,14 @@ export default function MovieDetails() {
         event.preventDefault();
         // Validar que los campos de nombre y comentario no estén vacíos
         if (!name || !comment) {
-            setAlertMessage('Por favor completa los campos de nombre y comentario antes de enviar el formulario.');
+            setAlertMessage('Por favor completa los campos de "Nombre" y "Comentario" antes de enviar el formulario.');
             setShowAlert(true);
             return;
         }
 
         const review = { name, rating, comment, movieId: movieDetails.id };
         dispatch(addReview(review));
-        setAlertMessage("Su reseña ha sido enviada exitosamente");
+        setAlertMessage("Su reseña ha sido enviada exitosamente!!");
         setShowAlert(true);
         setName('');
         setRating(0);
