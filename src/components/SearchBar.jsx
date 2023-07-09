@@ -14,16 +14,16 @@ export default function SearchBar() {
     dispatch(searchMovies(searchTerm));
   }
 
-  return (    
-      <Form onSubmit={handleSearch} className={`custom-placeholde d-flex mb-5 mx-5 ${darkMode ? 'bg-dark' : 'bg-light'}`}>
-        <Form.Control
-          type="text"
-          placeholder="Buscar..."
-          value={searchTerm}
-          onChange={(event) => setSearchTerm(event.target.value)}
-          className={`${darkMode ? 'bg-dark text-light custom-placeholder' : 'text-dark'}`}
-        />
-        <Button type="submit" className="ms-2">Buscar</Button>
-      </Form>
+  return (
+    <Form onSubmit={handleSearch} className={`custom-placeholder d-flex mb-5 mx-5 ${darkMode ? 'bg-dark' : 'bg-light'}`}>
+      <Form.Control
+        type="text"
+        placeholder="Buscar..."
+        value={searchTerm}
+        onChange={(event) => setSearchTerm(event.target.value)}
+        className={`${darkMode ? 'bg-dark text-light custom-placeholder' : 'text-dark'}`}
+      />
+      <Button type="submit" className="ms-2">Buscar</Button>
+    </Form>
   );
 }

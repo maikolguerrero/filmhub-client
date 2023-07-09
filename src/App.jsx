@@ -12,6 +12,7 @@ import ProtectedRoute from './app/auth/ProtectedRoute';
 import Panel from './components/admin/Panel';
 import AdminsTable from './components/admin/AdminsTable';
 import PanelMovies from './components/admin/PanelMovies';
+import ReviewsTable from './components/admin/ReviewsTable';
 
 export default function App() {
   return (
@@ -21,11 +22,7 @@ export default function App() {
 
         <Routes>
           <Route path="/" element={<Home />} />
-
-          <Route path="movies">
-            <Route path="" element={<>movies</>} />
-            <Route path=":id" element={<MovieDetails />} />
-          </Route>
+          <Route path="movies/:id" element={<MovieDetails />} />
 
           <Route path="/admin">
             <Route path="" element={<ProtectedRoute />} />
@@ -34,13 +31,8 @@ export default function App() {
 
             <Route path="panel">
               <Route path="" element={<ProtectedRoute route={Panel} />} />
-
-              
               <Route path="movies" element={<ProtectedRoute panelRoute={PanelMovies} />} />
-              <Route path="add" element={<>Panel agregar movies</>} />
-              
-
-              <Route path="reviews" element={<>Panel usuarios reviews</>} />
+              <Route path="reviews" element={<ProtectedRoute panelRoute={ReviewsTable} />} />
               <Route path="users" element={<ProtectedRoute panelRoute={AdminsTable} />} />
             </Route>
           </Route>

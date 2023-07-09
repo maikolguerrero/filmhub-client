@@ -18,7 +18,7 @@ export default function AdminsTable() {
   const token = useSelector(selectToken);
   const darkMode = useSelector(selectDarkMode);
   const dispatch = useDispatch();
-  
+
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [adminToDelete, setAdminToDelete] = useState(null);
   const [adminDeleted, setAdminDeleted] = useState(false);
@@ -73,7 +73,7 @@ export default function AdminsTable() {
       {admins.length == 0 ?
         <div className="py-5">
           <h1 className='text-danger py-1'>No tienes permisos</h1>
-          <h2 className='text-black'>No puedes ver los datos de los admins</h2>
+          <h2 className={`${darkMode ? 'text-light' : 'text-dark'}`}>No puedes ver los datos de los admins</h2>
         </div> :
         <>
           <h1 className={`py-3 text-center  ${darkMode ? 'text-light' : 'text-dark'}`}>Administrar Usuarios Admins</h1>

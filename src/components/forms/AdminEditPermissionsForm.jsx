@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { selectDarkMode } from '../../app/features/darkMode/darkMode'
 import { selectToken } from '../../app/features/admins/adminsSlice';
 import API_ENDPOINT from '../../../config/api_endpoint';
 import Modal from 'react-bootstrap/Modal';
@@ -9,6 +10,8 @@ import CustomAlert from '../alerts/CustomAlert';
 
 export default function AdminEditPermissionsForm({ adminId, permissions: initialPermissions }) {
   const token = useSelector(selectToken); // Obtener el token del estado de autenticación
+  const darkMode = useSelector(selectDarkMode);
+
   const [show, setShow] = useState(false);
   const [permissions, setPermissions] = useState(initialPermissions);
   const [permissionsOriginal, setPermissionsOriginal] = useState(initialPermissions);
@@ -71,7 +74,7 @@ export default function AdminEditPermissionsForm({ adminId, permissions: initial
         <Modal.Header closeButton className='bg-warning'>
           <Modal.Title>Editar Permisos</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className={`${darkMode ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="createPermission">
               <Form.Check
@@ -104,7 +107,7 @@ export default function AdminEditPermissionsForm({ adminId, permissions: initial
               />
             </Form.Group>
 
-            <Modal.Footer>
+            <Modal.Footer className={`${darkMode ? 'bg-dark' : 'bg-light'}`}>
               <Button variant="danger" onClick={handleClose}>
                 Cancelar
               </Button>
