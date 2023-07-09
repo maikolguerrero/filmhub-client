@@ -7,6 +7,7 @@ import { IoLockClosed, IoPersonCircle } from "react-icons/io5";
 import API_ENDPOINT from '../../../config/api_endpoint';
 import { login } from '../../app/features/auth/authSlice';
 import CustomAlert from '../alerts/CustomAlert';
+import { AnimatePresence, motion } from "framer-motion"
 
 export default function LoginForm() {
   const dispatch = useDispatch();
@@ -74,12 +75,29 @@ export default function LoginForm() {
 
   return (
     <main className={`${darkMode ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
-      <section className="seccion-registro py-5">
+      <motion.section
+        className="seccion-registro py-5"
+        initial={{
+          opacity: 0,
+          scale: 0
+        }}
+        animate={{
+          opacity: 1,
+          scale: 1
+        }}
+        transition={{
+          duration: 1,
+          ease: 'backOut'
+        }}
+        exit={{
+          opacity: 0
+        }}
+      >
         <div className={`caja-formulario lg:caja-formulario-grande border border-3 border-info ${darkMode ? 'bg-dark' : 'bg-light'}`}>
           <form className="formulario lg:p-4" onSubmit={handleSubmit}>
             <h2 className="titulo-form fs-1">Iniciar Sesión</h2>
             <div className="caja-input border-bottom border-3 border-info">
-              <IoPersonCircle className={`icono ${darkMode ? 'text-light' : 'text-dark'}`}/>
+              <IoPersonCircle className={`icono ${darkMode ? 'text-light' : 'text-dark'}`} />
               <input type="text"
                 className={`fs-5 ${darkMode ? 'text-light' : 'text-dark'}`}
                 required
@@ -100,7 +118,7 @@ export default function LoginForm() {
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value)
-                }}/>
+                }} />
               <label>Contraseña</label>
             </div>
 
@@ -111,7 +129,7 @@ export default function LoginForm() {
             </div>
           </form>
         </div>
-      </section>
+      </motion.section>
 
       {
         showAlert && (

@@ -9,6 +9,8 @@ import { Row, Col, Image, Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { selectDarkMode } from '../../app/features/darkMode/darkMode'
 import CustomAlert from '../alerts/CustomAlert';
+import { AnimatePresence, motion } from "framer-motion"
+import { variants2 } from '../../styles/animations/variants';
 
 export default function MovieDetails() {
   const { id } = useParams();
@@ -103,85 +105,125 @@ export default function MovieDetails() {
 
       <Row className={`px-3 ${darkMode ? 'bg-dark text-light' : 'bg-light'}`}>
         <Col md={5} className="my-5 d-flex align-items-center justify-content-center mx-3">
-          <Image
-            width={300}
-            height={450}
-            src={`${API_ENDPOINT}/images/${movieDetails.image}`}
-            alt={movieDetails.title}
-            style={
-              hover
-                ? { transform: 'scale(1.1)', opacity: 0.8 }
-                : {}
-            }
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-          />
+          <motion.div
+            custom={{ delay: 0}}
+            initial='hidden'
+            animate='visible'
+            exit='hidden'
+            whileHover='hover'
+            variants={variants2}
+          >
+            <Image
+              width={300}
+              height={450}
+              src={`${API_ENDPOINT}/images/${movieDetails.image}`}
+              alt={movieDetails.title}
+              onMouseEnter={() => setHover(true)}
+              onMouseLeave={() => setHover(false)}
+            />
+          </motion.div>
         </Col>
         <Col md={5} className="my-5 align-items-center justify-content-center">
-          <h1 className="movie-title">{movieDetails.title}</h1>
-          <p>
-            <strong>Calificación:</strong> {renderStars(roundToHalfStar(movieDetails.rating))}
-          </p>
-          <p>
-            <strong>Sinopsis:</strong> {movieDetails.synopsis}
-          </p>
-          <p>
-            <strong>Género:</strong>{' '}
-            {typeof movieDetails.genre === 'string'
-              ? movieDetails.genre
-              : 'N/A'}
-          </p>
-          <p>
-            <strong>Franquicia:</strong> {movieDetails.franchise}
-          </p>
-          <p>
-            <strong>Fecha de lanzamiento:</strong>{' '}
-            {movieDetails.release_date.slice(0, 10)}
-          </p>
-          <p>
-            <strong>Actores:</strong> {movieDetails.actors.join(', ')}
-          </p>
-          <p>
-            <strong>Directores:</strong> {movieDetails.directors.join(', ')}
-          </p>
+          <motion.div
+            initial={{
+              opacity: 0,
+              scale: 0
+            }}
+            animate={{
+              opacity: 1,
+              scale: 1
+            }}
+            transition={{
+              duration: 1,
+              ease: 'backOut'
+            }}
+            exit={{
+              opacity: 0
+            }}
+          >
+            <h1 className="movie-title">{movieDetails.title}</h1>
+            <p>
+              <strong>Calificación:</strong> {renderStars(roundToHalfStar(movieDetails.rating))}
+            </p>
+            <p>
+              <strong>Sinopsis:</strong> {movieDetails.synopsis}
+            </p>
+            <p>
+              <strong>Género:</strong>{' '}
+              {typeof movieDetails.genre === 'string'
+                ? movieDetails.genre
+                : 'N/A'}
+            </p>
+            <p>
+              <strong>Franquicia:</strong> {movieDetails.franchise}
+            </p>
+            <p>
+              <strong>Fecha de lanzamiento:</strong>{' '}
+              {movieDetails.release_date.slice(0, 10)}
+            </p>
+            <p>
+              <strong>Actores:</strong> {movieDetails.actors.join(', ')}
+            </p>
+            <p>
+              <strong>Directores:</strong> {movieDetails.directors.join(', ')}
+            </p>
+          </motion.div>
         </Col>
       </Row>
       <Row className={`py-5 px-3 ${darkMode ? 'bg-dark text-light' : 'bg-light'}`}>
         <Col md={{ span: 6, offset: 3 }}>
-          <h2>Agregar una reseña</h2>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="name">
-              <Form.Label>Nombre</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Ingresa tu nombre"
-                value={name}
-                onChange={(event) => setName(event.target.value)}
-                className={`${darkMode ? 'bg-dark text-light custom-placeholder' : 'text-dark'}`}
-              />
-            </Form.Group>
+          <motion.div
+            initial={{
+              opacity: 0,
+              scale: 0
+            }}
+            animate={{
+              opacity: 1,
+              scale: 1
+            }}
+            transition={{
+              duration: 1,
+              ease: 'backOut'
+            }}
+            exit={{
+              opacity: 0
+            }}
+          >
+            <h2>Agregar una reseña</h2>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className="mb-3" controlId="name">
+                <Form.Label>Nombre</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Ingresa tu nombre"
+                  value={name}
+                  onChange={(event) => setName(event.target.value)}
+                  className={`${darkMode ? 'bg-dark text-light custom-placeholder' : 'text-dark'}`}
+                />
+              </Form.Group>
 
-            <Form.Group className="mb-3" controlId="rating">
-              <Form.Label>Calificación</Form.Label>
-              <div>{renderStars(rating)}</div>
-            </Form.Group>
+              <Form.Group className="mb-3" controlId="rating">
+                <Form.Label>Calificación</Form.Label>
+                <div>{renderStars(rating)}</div>
+              </Form.Group>
 
-            <Form.Group className="mb-3" controlId="comment">
-              <Form.Label>Comentario</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                placeholder="Ingresa tu comentario"
-                value={comment}
-                onChange={(event) => setComment(event.target.value)}
-                className={`${darkMode ? 'bg-dark text-light custom-placeholder' : 'text-dark'}`}
-              />
-            </Form.Group>
+              <Form.Group className="mb-3" controlId="comment">
+                <Form.Label>Comentario</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  placeholder="Ingresa tu comentario"
+                  value={comment}
+                  onChange={(event) => setComment(event.target.value)}
+                  className={`${darkMode ? 'bg-dark text-light custom-placeholder' : 'text-dark'}`}
+                />
+              </Form.Group>
 
-            <Button variant="primary" type="submit">
-              Enviar
-            </Button>
-          </Form>
+              <Button variant="primary" type="submit">
+                Enviar
+              </Button>
+            </Form>
+          </motion.div>
         </Col>
       </Row>
     </>
