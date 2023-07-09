@@ -1,23 +1,28 @@
 import React, { useState } from "react";
+import { useSelector } from 'react-redux'
+import { selectDarkMode } from '../../app/features/darkMode/darkMode';
 import TablaMovies from "./tables/TablaMovies";
-import { Button } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
 import ModalCentrado from "./modals/ModalCentrado";
 import MoviesForm from "../forms/MoviesForm";
 import { IoAddCircle } from "react-icons/io5";
 
 export default function PanelMovies() {
+    const darkMode = useSelector(selectDarkMode);
+    const movieState = useSelector((state) => state.movies);
     const [modalShow, setModalShow] = useState(false);
 
     return (
-        <section className='container h-auto p-4 my-5 bg-light rounded-3 border border-3 border-primary'>
-            <TablaMovies />
+        <Container fluid className={`py-5 text-center  ${darkMode ? 'bg-dark' : 'bg-light'}`} style={{ width: "100%" }}>
+            {movieState.movies.length === 0 ? (<></>) : (<TablaMovies />)}
 
-            <Button variant="dark"
+            <Button variant='dark'
                 className="d-flex justify-content-center align-items-center gap-2"
                 onClick={() => {
                     setModalShow(true)
                 }}>
-                Agregar Nueva Película <IoAddCircle className="text-success fs-3"/>
+                Agregar Nueva Película <IoAddCircle className="text-success fs-3" />
             </Button>
 
             <ModalCentrado
@@ -26,6 +31,6 @@ export default function PanelMovies() {
                 show={modalShow}
                 onHide={() => setModalShow(false)}
             />
-        </section>
+        </Container>
     );
 }

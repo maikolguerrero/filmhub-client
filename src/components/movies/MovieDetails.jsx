@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { selectDarkMode } from '../../app/features/darkMode/darkMode'
 import { fetchMovieDetails } from '../../app/features/movies/moviesSlice';
 import API_ENDPOINT from '../../../config/api_endpoint';
 import { AiFillStar } from 'react-icons/ai';
@@ -9,6 +10,7 @@ import { Row, Col, Image } from 'react-bootstrap';
 export default function MovieDetails() {
   const { id } = useParams();
   const movieDetails = useSelector((state) => state.movies.movieDetails);
+  const darkMode = useSelector(selectDarkMode);
   const dispatch = useDispatch();
   const [hover, setHover] = useState(false);
 
@@ -38,7 +40,7 @@ export default function MovieDetails() {
   };
 
   return (
-    <Row>
+    <Row className={`${darkMode ? 'bg-dark text-light' : 'bg-light'}`}>
       <Col md={5} className="my-5 d-flex align-items-center justify-content-center">
         <Image
           width={300}

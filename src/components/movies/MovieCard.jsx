@@ -1,13 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { AiFillStar } from 'react-icons/ai';
 import API_ENDPOINT from '../../../config/api_endpoint';
 import { Link } from 'react-router-dom';
+import { selectDarkMode } from '../../app/features/darkMode/darkMode'
 
 export default function MovieCard({ movie }) {
   const { title, image, rating } = movie;
+  const darkMode = useSelector(selectDarkMode);
 
   const renderStars = () => {
     const stars = [];
@@ -25,7 +28,7 @@ export default function MovieCard({ movie }) {
   };
 
   return (
-    <Card className="bg-secondary text-light" style={{ width: '16rem' }}>
+    <Card className={`text-light shadow border-2 border-info ${darkMode ? 'bg-primary' : 'bg-secondary'}`} style={{ width: '16rem' }}>
       <Card.Img variant="top" src={`${API_ENDPOINT}/images/${image}`} alt="imágen_película" />
       <Card.Body>
         <Card.Title>{title}</Card.Title>
@@ -34,7 +37,7 @@ export default function MovieCard({ movie }) {
       <Card.Footer>
         <div className="d-flex justify-content-center align-items-center">
           <Link to={`/movies/${movie.id}`}>
-            <Button variant="light">Ver más...</Button>
+            <Button variant={`${darkMode ? 'dark' : 'light'}`}>Ver más...</Button>
           </Link>
         </div>
       </Card.Footer>
