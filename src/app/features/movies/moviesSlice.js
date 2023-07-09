@@ -44,13 +44,14 @@ export const fetchMovieDetails = createAsyncThunk(
   async (movieId) => {
     try {
       const response = await fetch(`${API_ENDPOINT}/movies/${movieId}`);
-      if (!response.ok) return [];
-
+      if (response.status === 404) {
+        throw new Error('Película no encontrada');
+      }
       const data = await response.json();
-      return data?.data?.movie ?? 'errorMovie';
+      return data.data.movie;
     } catch (error) {
       console.error('Error al obtener los detalles de la película:', error);
-      return null; // Retornar null en caso de error
+      throw error;
     }
   }
 );
