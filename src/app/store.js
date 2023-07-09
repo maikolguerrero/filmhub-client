@@ -3,12 +3,14 @@ import moviesReducer from './features/movies/moviesSlice';
 import authReducer from './features/auth/authSlice';
 import adminsReducer from './features/admins/adminsSlice';
 import generosReducer from './features/movies/generosSlice'
+import darkModeReducer from './features/darkMode/darkMode';
 
 export const store = configureStore({
   reducer: {
     movies: moviesReducer,
     auth: authReducer,
     admins: adminsReducer,
-    generos: generosReducer
+    generos: generosReducer,
+    darkMode: darkModeReducer
   },
 });

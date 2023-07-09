@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectDarkMode } from '../../../app/features/darkMode/darkMode'
 
 export const Paginacion = ({ pagina, setPagina, maximo }) => {
+  const darkMode = useSelector(selectDarkMode);
   const [input, setInput] = useState(1);
+
 
   const nextPage = () => {
     setInput(parseInt(input) + 1);
@@ -44,14 +48,14 @@ export const Paginacion = ({ pagina, setPagina, maximo }) => {
         </svg>
       </button>
       <input
-        className='border border-1 border-dark'
+        className={`border border-1 ${darkMode ? 'bg-dark text-light border-light' : 'bg-light text-dark border-dark'}`}
         onChange={e => onChange(e)}
         onKeyDown={e => onKeyDown(e)}
         name="page"
         autoComplete="off"
         value={input}
       />
-      <p> de {maximo} </p>
+      <p className={`${darkMode ? 'text-light' : 'text-dark'}`}>de {maximo} </p>
       <button
         className='bg-dark'
         disabled={pagina === Math.ceil(maximo) || pagina > Math.ceil(maximo)}

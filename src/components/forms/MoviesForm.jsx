@@ -1,6 +1,7 @@
 import Form from "react-bootstrap/Form";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { selectDarkMode } from '../../app/features/darkMode/darkMode'
 import { listarGeneros } from "../../app/features/movies/generosSlice";
 import { Button } from "react-bootstrap";
 import API_ENDPOINT from "../../../config/api_endpoint";
@@ -11,6 +12,7 @@ function MoviesForm(props) {
   const authState = useSelector((state) => state.auth);
   const generosState = useSelector((state) => state.generos);
   const dispatch = useDispatch();
+  const darkMode = useSelector(selectDarkMode);
 
   const [state, setState] = useState({
     title: "",
@@ -87,7 +89,7 @@ function MoviesForm(props) {
     const error = validacion();
 
     if (error) {
-      setMessage('Algun Campo es Inválido')
+      setMessage('Algún Campo es Inválido')
       setShowAlert(true)
       return
     }
@@ -144,9 +146,9 @@ function MoviesForm(props) {
   };
 
   return (
-    <div className="container p-4 pt-5">
+    <div className={`container p-4 ${darkMode ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
       <Form onSubmit={handleSubmit}>
-        <h2 className="text-center p-3">{props.titulo}</h2>
+        <h2 className="text-center">{props.titulo}</h2>
 
         <Form.Group className="mb-3" controlId="titulo-m">
           <Form.Label>Título:</Form.Label>
@@ -240,9 +242,9 @@ function MoviesForm(props) {
 
         <Button
           disabled={error}
-          className="boton-enviar"
+          className="boton-enviar text-light"
           type="submit"
-          variant="primary"
+          variant="info"
         >
           {props.titulo}
         </Button>

@@ -7,15 +7,22 @@ import Button from 'react-bootstrap/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../app/features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
+import { toggleDarkMode, selectDarkMode } from '../app/features/darkMode/darkMode';
 
 export default function NavbarResponsive() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+  const darkMode = useSelector(selectDarkMode);
 
   const handleLogout = () => {
     dispatch(logout());
     navigate('admin/login');
+  };
+
+  const handleToggleDarkMode = () => {
+    localStorage.setItem('darkMode', !darkMode);
+    dispatch(toggleDarkMode());
   };
 
   return (
@@ -35,7 +42,7 @@ export default function NavbarResponsive() {
               )}
             </Nav>
 
-            <Button variant='primary' className='p-0 m-0 mx-4'>
+            <Button variant='primary' className='p-0 m-0 mx-4' onClick={handleToggleDarkMode}>
               <img className='' src="/assets/darkmode.png" alt="darkmode" style={{ width: '25px', height: 'auto' }} />
             </Button>
             {isLoggedIn && (
@@ -50,4 +57,3 @@ export default function NavbarResponsive() {
     </>
   );
 }
-

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux'
+import { selectDarkMode } from '../../app/features/darkMode/darkMode';
 import { fetchAdmins, selectAdmins, selectToken } from '../../app/features/admins/adminsSlice';
 import API_ENDPOINT from '../../../config/api_endpoint';
 import Container from 'react-bootstrap/Container';
@@ -15,7 +16,9 @@ import { Paginacion } from '../admin/tables/Paginacion';
 export default function AdminsTable() {
   const admins = useSelector(selectAdmins)
   const token = useSelector(selectToken);
+  const darkMode = useSelector(selectDarkMode);
   const dispatch = useDispatch();
+  
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [adminToDelete, setAdminToDelete] = useState(null);
   const [adminDeleted, setAdminDeleted] = useState(false);
@@ -66,17 +69,17 @@ export default function AdminsTable() {
   };
 
   return (
-    <Container fluid className="py-5 bg-light text-center" style={{ width: "100%" }}>
+    <Container fluid className={`py-5 text-center  ${darkMode ? 'bg-dark' : 'bg-light'}`} style={{ width: "100%" }}>
       {admins.length == 0 ?
         <div className="py-5">
           <h1 className='text-danger py-1'>No tienes permisos</h1>
           <h2 className='text-black'>No puedes ver los datos de los admins</h2>
         </div> :
         <>
-          <h1>Administrar Usuarios Admins</h1>
+          <h1 className={`py-3 text-center  ${darkMode ? 'text-light' : 'text-dark'}`}>Administrar Usuarios Admins</h1>
           <Row className="justify-content-center pt-3">
             <Col xs={11} sm={9} md={7} lg={6}>
-              <Table striped bordered hover variant="info" responsive="md" className="text-center text-light align-middle shadow border-1 border-info">
+              <Table striped bordered hover responsive="md" variant={`${darkMode ? 'dark' : 'info'}`} className={`text-center text-light align-middle shadow border-1 border-info ${darkMode ? 'dark' : 'primary'}`}>
                 <thead>
                   <tr className='align-middle'>
                     <th>ID</th>
@@ -85,7 +88,7 @@ export default function AdminsTable() {
                     <th>Acciones</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className='align-middle'>
                   {admins.slice(
                     (pagina - 1) * porPagina,
                     (pagina - 1) * porPagina + porPagina
@@ -115,7 +118,8 @@ export default function AdminsTable() {
         </>
       }
 
-      <Paginacion pagina={pagina} setPagina={setPagina} maximo={maximo} />
+      {admins.length !== 0 && <Paginacion pagina={pagina} setPagina={setPagina} maximo={maximo} />}
+
 
       <ConfirmationModal
         show={showConfirmationModal}
