@@ -4,6 +4,7 @@ import authReducer from './features/auth/authSlice';
 import adminsReducer from './features/admins/adminsSlice';
 import generosReducer from './features/movies/generosSlice'
 import darkModeReducer from './features/darkMode/darkMode';
+import reviewsReducer from './features/movies/reviewsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     auth: authReducer,
     admins: adminsReducer,
     generos: generosReducer,
-    darkMode: darkModeReducer
+    darkMode: darkModeReducer,
+    reviews: reviewsReducer,
   },
 });
