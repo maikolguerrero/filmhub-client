@@ -28,7 +28,7 @@ Aquí tienes un video de YouTube que muestra una demostración de la aplicación
 ## Instalación
 - **1.** Clona el repositorio:
 ```
-github.com/maikolguerrero/filmhub-client.git
+git clone github.com/maikolguerrero/filmhub-client.git
 ```
 - **2.**  Ingresa al directorio del proyecto:
 ```
